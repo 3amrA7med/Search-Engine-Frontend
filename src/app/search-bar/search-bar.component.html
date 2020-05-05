@@ -1,8 +1,9 @@
-<mat-toolbar color="warn">
+<mat-toolbar style="background-color: #001763; color: white;">
   <mat-toolbar-row> 
     <span >{{pageTitle}}</span> 
     <div class="toolbar-buttons">
       <button mat-icon-button (click)="showSearchBar()" >
+        Search
         <mat-icon>search</mat-icon>
       </button>   
       <button mat-icon-button (click)="showSearchBar()" >
@@ -11,19 +12,19 @@
     </div>
   </mat-toolbar-row>
     <!--<span class="example-fill-remaining-space"></span>-->
-  
     <mat-toolbar-row *ngIf="searching">
-      <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Yalla Search" [(ngModel)]="searchResult">
-          <button mat-button matSuffix mat-icon-button aria-label="Clear"
-          (click)="hideSearchBar()" class="button" >
-          <mat-icon>close</mat-icon>
-          </button>
-          <button mat-button *ngIf="searchResult" matSuffix mat-icon-button aria-label="search"
-          (click)="submit()" class="button" >
-          <mat-icon>search</mat-icon>
-          </button>
-      </mat-form-field>
-    </mat-toolbar-row>
-  
+    <div style="border: 1px solid #DDD; width: 1000px; border: none;">
+      <input type="text" placeholder="Yalla Search" [(ngModel)]="searchResult"
+       style="border: none; border-radius: 10px;  width: 1000px; height:30px;font-family: 'Open Sans', sans-serif; font-size: 20px;"/>
+    </div>
+    <button mat-button matSuffix mat-icon-button aria-label="Clear"
+        (click)="hideSearchBar()" class="button" >
+        <mat-icon>close</mat-icon>
+        </button>
+        <button mat-button *ngIf="searchResult" matSuffix mat-icon-button aria-label="search"
+        (click)="submit()" class="button" >
+        <mat-icon>search</mat-icon>
+        </button>
+  </mat-toolbar-row>
+
 </mat-toolbar>

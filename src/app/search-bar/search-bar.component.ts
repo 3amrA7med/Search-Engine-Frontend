@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-  pageTitle : string = "Search Engine Application";
+  pageTitle : string = "Yalla Search Engine Application";
   searching : Boolean = false;
   searchResult : any = null;
   constructor() { }

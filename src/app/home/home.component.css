@@ -1,13 +1,54 @@
-
-.example-card {
-    margin-top: auto;
-    margin-left: 20px;
-    margin-right: auto;
-    margin-bottom: auto;
-    max-width: 400px;
+body {
+    background-color: white;
   }
   
-  .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  
+  .card:not(:first-child) {
+      margin-left: -50px;
+  }
+  
+  .card:hover {
+    transform: translateY(-20px);
+    transition: 0.4s ease-out;
+  }
+  
+  .card:hover ~ .card {
+    position: relative;
+    left: 50px;
+    transition: 0.4s ease-out;
+  }
+  
+.card {
+    background-color: white;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    border-radius: 10px;
+    max-width: 400px;
+  }
+  .websites {
+    background-image:  url('../../assets/websites.jpeg');
     background-size: cover;
+  }
+  
+  .history {
+    background-image:  url('../../assets/history.jpg');
+    background-size: cover;
+  }
+
+  .trends {
+    background-image:  url('../../assets/trends.jpg');
+    background-size: cover;
+  }
+  
+  
+  .viewport {
+    height: 400px;
+    width: 400px;
+    border: 1px solid black;
+  }
+  
+  .item {
+    height: 50px;
   }

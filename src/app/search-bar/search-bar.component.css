@@ -4,8 +4,8 @@
 
 .toolbar-buttons button,
 .toolbar-buttons a {
-  margin-right: auto;
-  margin-left: 25px;
+  margin-right: 30px;
+  margin-left: 30px;
   margin-top: auto;
 }
 .bar
@@ -14,7 +14,7 @@
     margin-left: auto;
     size: 200;
 }
-.example-form-field {
+.field {
     width: 1000px;
   }
 
