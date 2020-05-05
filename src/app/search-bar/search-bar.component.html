@@ -1,0 +1,29 @@
+<mat-toolbar color="warn">
+  <mat-toolbar-row> 
+    <span >{{pageTitle}}</span> 
+    <div class="toolbar-buttons">
+      <button mat-icon-button (click)="showSearchBar()" >
+        <mat-icon>search</mat-icon>
+      </button>   
+      <button mat-icon-button (click)="showSearchBar()" >
+        <mat-icon>home</mat-icon>
+      </button>           
+    </div>
+  </mat-toolbar-row>
+    <!--<span class="example-fill-remaining-space"></span>-->
+  
+    <mat-toolbar-row *ngIf="searching">
+      <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Yalla Search" [(ngModel)]="searchResult">
+          <button mat-button matSuffix mat-icon-button aria-label="Clear"
+          (click)="hideSearchBar()" class="button" >
+          <mat-icon>close</mat-icon>
+          </button>
+          <button mat-button *ngIf="searchResult" matSuffix mat-icon-button aria-label="search"
+          (click)="submit()" class="button" >
+          <mat-icon>search</mat-icon>
+          </button>
+      </mat-form-field>
+    </mat-toolbar-row>
+  
+</mat-toolbar>

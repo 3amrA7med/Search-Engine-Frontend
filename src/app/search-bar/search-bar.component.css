@@ -1,0 +1,20 @@
+
+
+.md-errors-spacer { display:none; }
+
+.toolbar-buttons button,
+.toolbar-buttons a {
+  margin-right: auto;
+  margin-left: 25px;
+  margin-top: auto;
+}
+.bar
+{
+    margin-right: auto;
+    margin-left: auto;
+    size: 200;
+}
+.example-form-field {
+    width: 1000px;
+  }
+
