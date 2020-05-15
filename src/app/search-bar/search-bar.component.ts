@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'search-bar',
@@ -8,8 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class SearchBarComponent implements OnInit {
   pageTitle : string = "Yalla Search Engine Application";
   searching : Boolean = false;
-  searchResult : any = null;
-  constructor() { }
+  searchValue : any = null;
+  imageSearch: Boolean = false;
+  listOfSuggestions: string[] = [];
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -18,11 +21,17 @@ export class SearchBarComponent implements OnInit {
     this.searching = true;
   }
   hideSearchBar():void{
-    this.searchResult = null;
+    this.searchValue = null;
     this.searching = false;
   }
   submit():void{
-    console.log(this.searchResult);
+    this.router.navigate(['/yalla-search', this.searchValue]);
   }
+  homeClicked():void{
+    this.searchValue = '';
+    this.searching = false;
+    this.router.navigate(['/yalla-home']);
+  }
+  
 
 }

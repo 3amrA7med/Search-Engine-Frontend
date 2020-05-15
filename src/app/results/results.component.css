@@ -1,0 +1,37 @@
+
+  .card:not(:first-child) {
+    margin-left: -50px;
+}
+
+.card:hover {
+  transform: translateX(-20px);
+  transition: 0.4s ease-out;
+}
+
+.card:hover ~ .card {
+  position: relative;
+  left: 50px;
+  transition: 0.4s ease-out;
+}
+
+.card {
+  background-color: white;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  border-radius: 10px;
+  width: 1400px;
+}
+
+.mat-paginator.paginator--centered {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+  } 
+
+.button-toggle-label {
+  display: inline-block;
+  margin: 16px;
+}
