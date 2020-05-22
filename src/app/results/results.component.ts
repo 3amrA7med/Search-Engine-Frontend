@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { SearchService } from '../search-bar/search.service';
+import { Search, ImageSearch } from '../search-bar/search-interface';
 
 @Component({
   selector: 'search-results',
@@ -11,25 +11,62 @@ import {map} from 'rxjs/operators';
 })
 export class ResultsComponent implements OnInit {
 
-  length : number = 0;
-  pageSize : number = 5;
-  searchResults : any[] =[];
+  length : number;
+  pageSize : number;
+  searchResults : Search[] =[];
   searchValue : string = ''; 
-  pageEvent : PageEvent;
-  constructor(private route:ActivatedRoute) { 
+  imageLength : number;
+  imagePageSize : number;
+  imageSearchResults : ImageSearch[] =[];
+  phrase : Boolean;
+  constructor(private route:ActivatedRoute,
+              private searchService:SearchService) {
+                this.pageSize = 5;
+                this.length = 0; 
+                this.imagePageSize = 8;
+                this.imageLength = 0;
+                this.phrase = false;
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(p=> {
       let value = this.route.snapshot.paramMap.get('searchValue');
-      console.log(value);
-      this.searchValue = this.processSearchValue(value.toString()); 
+      this.phrase = (this.route.snapshot.paramMap.get('phrase')=="true");
+      this.searchValue = value;
+      this.searchService.getResults(this.searchValue, 0, this.pageSize,this.phrase).subscribe({
+        next : response =>{          
+          this.searchResults = response[0].searchResults;
+          this.length = response[1].pageDetails.totalSize;
+        }
+      });
+
+      this.searchService.getImageResults(this.searchValue, 0, this.imagePageSize).subscribe({
+        next : response=>{          
+          this.imageSearchResults = response[0].searchResults;
+          this.imageLength = response[1].pageDetails.totalSize;
+        }
+      })
+      /**
+       * 
+       *  */ 
   });
   }
+  onPageChanged(e) {
+    this.pageSize = e.pageSize;
+    this.searchService.getResults(this.searchValue, e.pageIndex, e.pageSize,this.phrase).subscribe({
+      next : response =>{
+        this.searchResults = response[0].searchResults;
+      }
+    });
+  }
 
-  processSearchValue(value:string) : string{
-    value = value.split(' ').join('+'); // Remove all spaces and replace with +
-    return value;
+  onImagePageChanged(e){
+    this.imagePageSize = e.pageSize;
+    this.searchService.getImageResults(this.searchValue, e.pageIndex,e.pageSize).subscribe({
+      next : response=>{
+        this.imageSearchResults = response[0].searchResults;
+      } 
+    })
   }
   
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'search-home',
@@ -27,10 +28,20 @@ export class HomeComponent implements OnInit {
 
   trends: any[]=["Facebook","Twitter","Linkedin","Github"  ];
 
-  history: any[]=["Facebook","Twitter","Linkedin","Github"  ];
-  constructor() { }
+  history: any[]=["Facebook","Twitter","Linkedin","Github"  ]; 
+
+  errorMessage: String;
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
+     
+  }
+
+  trendSelected(trend : string) : void{
+    this.router.navigate(['/yalla-search', trend, false]);
+  }
+  historySelected(history : string) : void{
+    this.router.navigate(['/yalla-search', history, false]);
   }
 
 }

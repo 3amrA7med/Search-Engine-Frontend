@@ -1,26 +1,63 @@
 <mat-tab-group [color]="'accent'" [backgroundColor]="'primary'">
     <mat-tab label="URL"> 
-        <div *ngIf="searchValue"> {{searchValue}} </div>
-        <div *ngFor="let search of searchResults">
-            <mat-card class="card" >
-                <a mat-button href="{{search.url}}" title="{{search.title}}">
-                <mat-card-header>
-                <mat-card-title>{{search.title}}</mat-card-title>
-                </mat-card-header>
-                <mat-card-content >
-                    {{search.description}}      
-                </mat-card-content>
-                </a>
-            </mat-card>
-        </div>    
-    </mat-tab>
-    <mat-tab label="Image"> Content 2 </mat-tab>
-</mat-tab-group>
+        <!--<div *ngIf="searchValue"> {{searchValue}} </div><mat-card-header>
+                        <mat-card-subtitle>{{image.url}}</mat-card-subtitle>
+                        </mat-card-header>
+                            <mat-card *ngIf="imageSearchResults">
+            <mat-card-header>
+                <mat-card-subtitle>
+                    no images
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                No images to show
+            </mat-card-content>
+        </mat-card>-->
+        <div style="margin-bottom:70px;">
+            <div *ngFor="let search of searchResults">
+                <mat-card class="card" >
+                    <mat-card-header>
+                        <mat-card-title>
+                        <a href="{{search.url}}" title="{{search.title}}">
+                    {{search.title}}</a></mat-card-title>
+                    <mat-card-subtitle>{{search.url}}</mat-card-subtitle>
+                    </mat-card-header>
 
-<mat-paginator class="paginator--centered"
+                    <mat-card-content >
+                        {{search.description}}      
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>    
+        <mat-paginator class="paginator--centered"
               [length]="length"
               [pageSize]="pageSize"
               [pageSizeOptions]="[5, 10, 25, 100]"
               [showFirstLastButtons]="true"
-              (page)="pageEvent = $event">
-</mat-paginator>
+              (page)="onPageChanged($event)">
+        </mat-paginator>
+    </mat-tab>
+    <mat-tab label="Image">
+        <mat-grid-list cols="4" rowHeight="1:1" style="margin-bottom:50px;">
+            <div *ngFor="let image of imageSearchResults">
+                <mat-grid-tile>
+                    <a href="{{image.url}}">
+                        <mat-card class="imageCard" >
+                            <mat-card-content >
+                                <img src="{{image.url}}" width="100%" height="auto">     
+                            </mat-card-content>
+                        </mat-card>
+                    </a>
+                </mat-grid-tile>
+            </div>  
+        </mat-grid-list>
+        <mat-paginator class="paginator--centered"
+            [length]="imageLength"
+            [pageSize]="imagePageSize"
+            [pageSizeOptions]="[4, 8, 16, 80]"
+            [showFirstLastButtons]="true"
+            (page)="onImagePageChanged($event)">
+        </mat-paginator>
+    </mat-tab>
+</mat-tab-group>
+

@@ -1,20 +1,26 @@
+.yalla-form {
+  width: 50%;
 
-
-.md-errors-spacer { display:none; }
-
-.toolbar-buttons button,
-.toolbar-buttons a {
-  margin-right: 30px;
-  margin-left: 30px;
-  margin-top: auto;
 }
-.bar
-{
-    margin-right: auto;
-    margin-left: auto;
-    size: 200;
+
+.yalla-full-width {
+  width: 100%;
 }
-.field {
-    width: 1000px;
-  }
+
+.yalla-search-input {
+  border: none; 
+  border-radius: 10px;  
+  height:35px;
+  margin-top: 20px;
+  font-family: 'Open Sans', sans-serif; 
+  font-size: 20px;
+  color: black;
+}
+
+.mat-input-element {
+  background: white;
+}
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
 

@@ -2,29 +2,50 @@
   <mat-toolbar-row> 
     <span >{{pageTitle}}</span> 
     <div class="toolbar-buttons">
-      <button mat-icon-button (click)="homeClicked()" >
+      <button mat-icon-button (click)="homeClicked()" title="Home Page">
         <mat-icon>home</mat-icon>
       </button> 
-      <button mat-icon-button (click)="showSearchBar()" >
-        Search
-        <mat-icon>search</mat-icon>
+      <button mat-icon-button (click)="showSearchBar()" title="Search Bar">
+        <mat-icon>list</mat-icon>
       </button>       
     </div>
   </mat-toolbar-row>
-    <!--<span class="example-fill-remaining-space"></span>-->
-    <mat-toolbar-row *ngIf="searching">
-    <div style="border: 1px solid #DDD; width: 1000px; border: none;">
-      <input type="text" [(ngModel)]="searchValue" (keydown.enter)="submit()"
-       style="border: none; border-radius: 10px;  width: 1000px; height:30px;font-family: 'Open Sans', sans-serif; font-size: 20px;"/>
-    </div>
+  <mat-toolbar-row *ngIf="searching">
+    <form class="yalla-form">
+      <mat-form-field class="yalla-full-width">
+        <input  type="text"
+                (keydown.enter)="submit()"
+                (input)="searchSuggestions()"
+                matInput
+                class="yalla-search-input"
+                [formControl]="myControl"
+                [matAutocomplete]="auto"/>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>    
     <button mat-button matSuffix mat-icon-button aria-label="Clear"
-        (click)="hideSearchBar()" class="button" >
-        <mat-icon>close</mat-icon>
-        </button>
-        <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="search"
-        (click)="submit()" class="button" >
-        <mat-icon>search</mat-icon>
-        </button>
-  </mat-toolbar-row>
+    (click)="hideSearchBar()" title="Close Search Bar">
+      <mat-icon>close</mat-icon>
+    </button>
 
+    <button mat-button matSuffix mat-icon-button aria-label="Clear"
+      (click)="recordClicked()" title="Voice Search">
+      <mat-icon color="{{recordColor}}">keyboard_voice</mat-icon>
+    </button>
+
+    <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="search"
+    (click)="submit()"  title="Normal Search">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="search"
+    (click)="phraseSubmit()"  title="Phrase Search">
+      <mat-icon>youtube_searched_for</mat-icon>
+    </button>
+    
+  </mat-toolbar-row>
 </mat-toolbar>

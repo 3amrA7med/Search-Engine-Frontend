@@ -2,6 +2,14 @@
   .card:not(:first-child) {
     margin-left: -50px;
 }
+a:link {
+  color: blue;
+}
+
+/* visited link */
+a:visited {
+  color: purple;
+}
 
 .card:hover {
   transform: translateX(-20px);
@@ -13,16 +21,27 @@
   left: 50px;
   transition: 0.4s ease-out;
 }
+.imageCard:hover {
+  transform: translatex(-10px);
+  transition: 0.4s ease-out;
+}
+
+.imageCard:hover ~ .card {
+  position: relative;
+  left: 50px;
+  transition: 0.4s ease-out;
+}
 
 .card {
   background-color: white;
-  margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: auto;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
   border-radius: 10px;
-  width: 1400px;
+  min-width: 30px;
+  max-width: 900px;
 }
+
 
 .mat-paginator.paginator--centered {
     display: flex;

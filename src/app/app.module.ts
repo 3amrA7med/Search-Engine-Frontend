@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -13,7 +13,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,6 +39,7 @@ import { ResultsGuard } from './results/results.guard';
     MatInputModule,
     MatIconModule,
     FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
     MatGridListModule,
@@ -45,9 +48,11 @@ import { ResultsGuard } from './results/results.guard';
     MatPaginatorModule,
     MatTabsModule,
     MatButtonToggleModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
     RouterModule.forRoot([
       { path: 'yalla-home', component: HomeComponent },
-      { path: 'yalla-search/:searchValue',
+      { path: 'yalla-search/:searchValue/:phrase',
         canActivate:[ResultsGuard],
         component: ResultsComponent },
       { path: '', redirectTo: 'yalla-home', pathMatch: 'full' },
