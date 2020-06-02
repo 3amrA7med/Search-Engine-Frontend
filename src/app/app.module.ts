@@ -16,6 +16,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,13 +25,15 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { HomeComponent } from './home/home.component';
 import { ResultsComponent } from './results/results.component';
 import { ResultsGuard } from './results/results.guard';
+import { DialogCountriesComponent } from './dialog-countries/dialog-countries.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchBarComponent,
     HomeComponent,
-    ResultsComponent
+    ResultsComponent,
+    DialogCountriesComponent
   ],
   imports: [
     BrowserModule,
@@ -50,13 +54,15 @@ import { ResultsGuard } from './results/results.guard';
     MatButtonToggleModule,
     MatAutocompleteModule,
     MatFormFieldModule,
+    MatTooltipModule,
+    MatDialogModule,
     RouterModule.forRoot([
-      { path: 'yalla-home', component: HomeComponent },
+      { path: 'yalla-home/:country', component: HomeComponent },
       { path: 'yalla-search/:searchValue/:phrase',
         canActivate:[ResultsGuard],
         component: ResultsComponent },
-      { path: '', redirectTo: 'yalla-home', pathMatch: 'full' },
-      { path: '**', redirectTo: 'yalla-home', pathMatch: 'full' } // Usually redirected to 404 page
+      { path: '', redirectTo: 'yalla-home/eg', pathMatch: 'full' },
+      { path: '**', redirectTo: 'yalla-home/eg', pathMatch: 'full' } // Usually redirected to 404 page
     ])
   ],
   providers: [],

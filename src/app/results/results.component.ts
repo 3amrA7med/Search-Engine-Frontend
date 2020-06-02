@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { SearchService } from '../search-bar/search.service';
 import { Search, ImageSearch } from '../search-bar/search-interface';

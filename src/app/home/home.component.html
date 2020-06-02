@@ -1,5 +1,5 @@
-<body>
-    <mat-grid-list cols="3" rowHeight="600px">
+<body class="backgroundImage">
+    <mat-grid-list [cols]="breakpoint" rowHeight="1:1.3" (window:resize)="onResize($event)" >
         <mat-grid-tile >
         <mat-card class="card">
             <mat-card-header>
@@ -31,7 +31,7 @@
             </mat-card-header>
             <mat-card-content>
                 <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
-                    <div *cdkVirtualFor="let hist of history; templateCacheSize: 0" class="item" >
+                    <div *cdkVirtualFor="let hist of history.slice().reverse(); templateCacheSize: 0" class="item" >
                         <button mat-button (click)="historySelected(hist)">
                             {{hist}}
                             <mat-icon mat-list-icon>history</mat-icon>
@@ -48,13 +48,13 @@
                 <mat-card-header>
                 <div mat-card-avatar class="trends"></div>
                 <mat-card-title>Yalla Trends</mat-card-title>
-                <mat-card-subtitle>Some search trends you may want to check</mat-card-subtitle>
+                <mat-card-subtitle>Yalla Person Search Trends in {{location}}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content >
                     <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
                         <div *cdkVirtualFor="let trend of trends; templateCacheSize: 0" class="item" >
-                            <button mat-button (click)="trendSelected(trend)">
-                                {{trend}}
+                            <button mat-button (click)="trendSelected(trend.trend)">
+                                {{trend.trend}}
                                 <mat-icon mat-list-icon>arrow_right_alt</mat-icon>
                             </button>
                             <mat-divider></mat-divider>
@@ -64,7 +64,4 @@
             </mat-card>
             </mat-grid-tile>
     </mat-grid-list>
-
-
-
 </body>

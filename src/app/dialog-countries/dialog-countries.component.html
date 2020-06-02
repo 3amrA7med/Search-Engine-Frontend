@@ -1,0 +1,8 @@
+<p mat-dialog-title>Your Current Location: {{location}}</p>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close *ngIf="location!='Egypt'" mat-dialog-close="Egypt">Egypt</button>
+    <button mat-button mat-dialog-close *ngIf="location!='France'" mat-dialog-close="France">France</button>
+    <button mat-button mat-dialog-close *ngIf="location!='Germany'" mat-dialog-close="Germany">Germany</button>
+    <button mat-button mat-dialog-close *ngIf="location!='Italy'" mat-dialog-close="Italy">Italy</button>
+    <button mat-button mat-dialog-close  mat-dialog-close="{{location}}">Close</button>
+</mat-dialog-actions>

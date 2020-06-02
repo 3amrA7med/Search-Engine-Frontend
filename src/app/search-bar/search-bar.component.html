@@ -1,14 +1,17 @@
 <mat-toolbar  color = "primary">
   <mat-toolbar-row> 
-    <span >{{pageTitle}}</span> 
-    <div class="toolbar-buttons">
-      <button mat-icon-button (click)="homeClicked()" title="Home Page">
-        <mat-icon>home</mat-icon>
-      </button> 
-      <button mat-icon-button (click)="showSearchBar()" title="Search Bar">
-        <mat-icon>list</mat-icon>
-      </button>       
-    </div>
+    <button mat-icon-button (click)="homeClicked()" matTooltip="Home Page" style="margin-bottom: 0.3%;">
+      <mat-icon>home</mat-icon>
+    </button> 
+    <button mat-icon-button (click)="flagClicked()" matTooltip="Choose country" style="margin-bottom: 0.3%;">
+      <mat-icon>flag</mat-icon>
+    </button> 
+      <button mat-icon-button (click)="showSearchBar()" matTooltip="Search" >
+        <img src="../../assets/yalla.PNG" height="60%" title="{{pageTitle}}">
+      </button>
+      
+           
+    
   </mat-toolbar-row>
   <mat-toolbar-row *ngIf="searching">
     <form class="yalla-form">
@@ -28,22 +31,22 @@
       </mat-form-field>
     </form>    
     <button mat-button matSuffix mat-icon-button aria-label="Clear"
-    (click)="hideSearchBar()" title="Close Search Bar">
+    (click)="hideSearchBar()" matTooltip="Close Search Bar">
       <mat-icon>close</mat-icon>
     </button>
 
     <button mat-button matSuffix mat-icon-button aria-label="Clear"
-      (click)="recordClicked()" title="Voice Search">
+      (click)="recordClicked()" matTooltip="Voice Search">
       <mat-icon color="{{recordColor}}">keyboard_voice</mat-icon>
     </button>
 
     <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="search"
-    (click)="submit()"  title="Normal Search">
+    (click)="submit()"  matTooltip="Normal Search">
       <mat-icon>search</mat-icon>
     </button>
 
     <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="search"
-    (click)="phraseSubmit()"  title="Phrase Search">
+    (click)="phraseSubmit()"  matTooltip="Phrase Search">
       <mat-icon>youtube_searched_for</mat-icon>
     </button>
     

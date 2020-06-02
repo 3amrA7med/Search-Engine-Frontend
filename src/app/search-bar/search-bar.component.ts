@@ -4,9 +4,11 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SearchService } from '../search-bar/search.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogCountriesComponent } from '../dialog-countries/dialog-countries.component';
 
-declare var webkitSpeechRecognition: any;
 
+const { webkitSpeechRecognition }: IWindow = (window as any) as IWindow;
 @Component({
   selector: 'search-bar',
   templateUrl: './search-bar.component.html',
@@ -19,16 +21,26 @@ export class SearchBarComponent implements OnInit {
   recordColor: String ='';
   recording : Boolean = false;
   finishedRecording:Boolean = true;
-  errorMessage: String;
   options : string[] = [];
   filteredOptions: Observable<string[]>;
-  voiceResult:String = '';
+  errorMessage:string;
+  country:string = "Egypt";
+
+  recognition = new webkitSpeechRecognition;
   constructor(private router:Router,
-              private searchService:SearchService) {
+              private searchService:SearchService,
+              private dialog: MatDialog) {
                 this.myControl.setValue('');
                }
 
   ngOnInit(): void {     
+    if (typeof webkitSpeechRecognition === "undefined") {
+      console.log("error not supported voice search")
+    } else {
+      this.recognition.continuous = true;
+      this.recognition.interimResults = true;
+      this.recognition.addEventListener("result", this.onResult);
+    }
   }
 
   showSearchBar():void{
@@ -38,9 +50,7 @@ export class SearchBarComponent implements OnInit {
     this.myControl.setValue('');
     this.searching = false;
   }
-  submit():void{
-    //this.searchService.setSearchWords(this.myControl.value);
-    
+  submit():void{    
     this.searchService.postSuggestion(this.myControl.value).subscribe(data =>{
       if (data)
         console.log("Suggestion inserted successfully");
@@ -59,7 +69,19 @@ export class SearchBarComponent implements OnInit {
   homeClicked():void{
     this.myControl.setValue('');
     this.searching = false;
-    this.router.navigate(['/yalla-home']);
+    this.router.navigate(['/yalla-home',this.searchService.getSearchLocationAbbr()]);
+  }
+
+  flagClicked():void{
+    let dialogRef = this.dialog.open(DialogCountriesComponent);
+    dialogRef.afterClosed().subscribe(result =>{
+      if (result != null)
+      {
+        this.country = result;
+        this.searchService.setSearchLocation(result);
+        this.router.navigate(['/yalla-home',this.searchService.getSearchLocationAbbr()]);
+      }
+    })
   }
 
   searchSuggestions():void{
@@ -89,50 +111,40 @@ export class SearchBarComponent implements OnInit {
     {
       this.startRecording();
     }
+    else{
+      this.stopRecording();
+    }
   }
 
   stopRecording(){
     this.recording = false;
     // Default color white
     this.recordColor = ""; 
+    this.recognition.stop();
   }
 
-  async startRecording(){
+  startRecording(){
     this.recording = true;
     // warn color when recording
     this.recordColor = "warn"; 
-    this.voiceResult = '';
     // Start recording
-    this.voiceSearch(); 
-    await this.sleep(4000);
-    console.log("Voice search result 2: ",this.voiceResult);
-    if(this.voiceResult != '')
-    {
-      this.myControl.setValue(this.voiceResult);
+    //this.voiceSearch(); 
+    this.recognition.start();
+  }
+    
+  onResult = event => {
+    let x =""
+    for (const res of event.results) {
+      const text = document.createTextNode(res[0].transcript);
+
+      x = x + text.textContent;
     }
-    console.log(this.myControl.value);
-    // When recording is finished
+    console.log(x);
+    this.myControl.setValue(x);
     this.stopRecording();
-  }
-  sleep(ms: number) {
-    return new Promise(resolve =>{ setTimeout(resolve, ms)});
-  }
-  voiceSearch(): void{
-    if('webkitSpeechRecognition' in window){
-        const vSearch = new webkitSpeechRecognition();
-        vSearch.lang = 'en-US';
-        vSearch.start();
-        vSearch.onresult = function(e){
-          this.voiceResult = e.results[0][0].transcript;
-          console.log("Voice search result: ",this.voiceResult);
-          
-        }
-        vSearch.onerror = function(e){
-          console.log("Error in speech recognition.")
-          vSearch.stop();
-        }
-    } else {
-      console.log("Your browser don't support our voice search");
-      }
-  }
+  };
+}
+
+export interface IWindow extends Window {
+  webkitSpeechRecognition: any;
 }
